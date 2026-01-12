@@ -23,8 +23,8 @@ export default function LoginPage(){
                 password
             })
 
-            const {token } = response.data;
-            await AsyncStorage.setItem('token', token);
+            const { token } = response.data;
+            await AsyncStorage.setItem('jwt_token', token);
             console.log('Connexion réussi !');
             
         } catch ({error}: any) {
@@ -36,42 +36,25 @@ export default function LoginPage(){
     }
     
     return (
-        <View style={{backgroundColor: '#fff'}}>
-            <Text>Connexion</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Connexion</Text>
             <TextInput 
                 placeholder="email"
                 value={email}
                 onChangeText={setEmail}
-                style={{
-                    borderWidth: 1,
-                    borderColor: '#ccc',
-                    padding: 12,
-                    marginBottom: 15,
-                    borderRadius: 5,
-                }}
+                style={styles.inputStyle}
             />
             <TextInput 
                 placeholder="mot de passe"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={true}
-                style={{
-                    borderWidth: 1,
-                    borderColor: '#ccc',
-                    padding: 12,
-                    marginBottom: 15,
-                    borderRadius: 5,
-                }}
+                style={styles.inputStyle}
             />
             <TouchableOpacity
                 onPress={handleLogin}
                 disabled={loading}
-                style={{
-                    backgroundColor: '#007AFF',
-                    padding: 15,
-                    borderRadius: 5,
-                    alignItems: 'center',
-                }}
+                style={styles.btnStyle}
             >
                 <Text 
                 style={{ color: '#fff', fontSize: 16, fontWeight: 'bold' }}
@@ -93,3 +76,29 @@ export default function LoginPage(){
     )
 }
 
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor: '#fff',
+        padding: 40,
+        justifyContent: 'center',
+        gap: 25
+    },
+    inputStyle:{
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 12,
+        marginBottom: 15,
+        borderRadius: 5,
+    },
+    title:{
+        fontSize: 24,
+        textAlign: 'center',
+    },
+    btnStyle:{
+        backgroundColor: '#007AFF',
+        padding: 15,
+        borderRadius: 5,
+        alignItems: 'center',
+    }
+})

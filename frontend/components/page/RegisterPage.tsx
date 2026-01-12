@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import apiClient from "../service/api";
 import { navigate } from "expo-router/build/global-state/routing";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function RegisterPage(){
     const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ export default function RegisterPage(){
     const [loading, setLoading]= useState(false);
 
     const handleRegister = async() =>{
+        await AsyncStorage.removeItem('jwt_token');
         if (!email || !password || !confirmPassword){
             return Alert.alert("Erreur", "tous les champs doivent être remplis")
         }
@@ -33,8 +35,8 @@ export default function RegisterPage(){
     }
 
     return (
-        <View style={{backgroundColor: '#fff'}}>
-            <Text>Inscription</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>Inscription</Text>
             <TextInput 
                 placeholder="Email"
                 value={email}
@@ -55,8 +57,8 @@ export default function RegisterPage(){
                 secureTextEntry
                 style={styles.inputStyle}
             />
-            <TouchableOpacity onPress={handleRegister}>
-                <Text>
+            <TouchableOpacity onPress={handleRegister} style={styles.btnStyle}>
+                <Text style={{color: '#fff', fontSize: 16, fontWeight: "bold"}}>
                     {loading? "Inscription...": "S'inscrire"}
                 </Text>
             </TouchableOpacity>
@@ -65,10 +67,28 @@ export default function RegisterPage(){
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor: '#fff',
+        padding: 40,
+        justifyContent: 'center',
+        gap: 25
+    },
     inputStyle:{
-        padding: 10,
         borderWidth: 1,
-        borderColor: '#205dce',
-        borderRadius: 10,
+        borderColor: '#ccc',
+        padding: 12,
+        marginBottom: 15,
+        borderRadius: 5,
+    },
+    title:{
+        fontSize: 24,
+        textAlign: 'center',
+    },
+    btnStyle:{
+        backgroundColor: '#007AFF',
+        padding: 15,
+        borderRadius: 5,
+        alignItems: 'center',
     }
 })

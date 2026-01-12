@@ -7,9 +7,12 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
     async (config)=>{
-        const token = await AsyncStorage.getItem('token');
+        const token = await AsyncStorage.getItem('jwt_token');
+        console.log('🔍 TOKEN pour', config.url, ':', token);
+
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+            console.log('📤 Header Authorization ajouté');
         }
         return config;
     },
