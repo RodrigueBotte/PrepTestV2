@@ -26,6 +26,7 @@ export default function LoginPage(){
             const { token } = response.data;
             await AsyncStorage.setItem('jwt_token', token);
             console.log('Connexion réussi !');
+            navigate('/(tabs)/calendar');
             
         } catch ({error}: any) {
             const message = "Une erreur est survenue lors de la connexion.";
